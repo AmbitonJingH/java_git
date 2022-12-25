@@ -35,6 +35,9 @@ public class Demo01 {
         }else {
             System.out.println("计算无效");
         }
+        //floor向下取整
+        //round四舍五入！！！！-1.5round是-1 坑！！！！！！
+        //ceil向上取整
     }
 
 
