@@ -1,12 +1,12 @@
 package Stringdemo;
 
 public class Student {
-    private String name;
-    public String grade;
-    public String school;
-    public String age;
-    public String sex;
-    public String phone;
+    private String name;//姓名
+    public String grade;//年级
+    public String school;//学校
+    public String age;//年龄
+    public String sex;//性别
+    public String phone;//电话号码
 
     @Override
     public String toString() {

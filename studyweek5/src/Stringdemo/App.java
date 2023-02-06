@@ -26,7 +26,7 @@ public class App {
                     updateinforMation(stu,s1);
                     break;
                 case 3:
-                    //delinforMation();
+                    delinforMation(stu);
                     break;
                 default:
                     System.out.println("输入错误！");
@@ -63,7 +63,13 @@ public class App {
     }
     //信息删除
     public static int delinforMation(StringBuffer stringBuffer){
-
+        String str = stringBuffer.toString();
+        String[] arr = str.split(",");
+        int end = 0;
+        end = arr[0].length()+arr[1].length()+arr[2].length()+arr[3].length()+arr[4].length()+arr[5].length()+5;
+        stringBuffer.delete(0,end);
+        System.out.println(stringBuffer);
+        System.out.println("删除成功！");
         return 0;
     }
 }
