@@ -2,7 +2,7 @@ import java.util.Arrays;
 
 public class SortDemo {
     public static void main(String[] args) {
-        int[] arr = {2,1,7,6,5,3,8,10,12,33,6,98,45};
+        int[] arr = {2,1,7,9,5,3,8,10,12,33,6,98,45};
         //bubbleSort(arr);
         //System.out.println(Arrays.toString(arr));
         int[] arr1 = QuickSort(arr,0,arr.length-1);
@@ -50,11 +50,11 @@ public class SortDemo {
             while(left<right&&arr[right]>=temp){
                 right--;
             }
-            arr[right] = arr[left];
+            arr[left]=arr[right];
             while(left<right&&arr[left]<=temp){
                 left++;
             }
-            arr[left]=arr[right];
+            arr[right] = arr[left];
         }
         arr[left]=temp;
         QuickSort(arr,low,left-1);
