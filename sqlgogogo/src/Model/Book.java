@@ -5,6 +5,10 @@ public class Book {
     private String bname;
     private int amount;
 
+    public Book() {
+
+    }
+
     public Book(String bno, String bname, int amount) {
         this.bno = bno;
         this.bname = bname;
