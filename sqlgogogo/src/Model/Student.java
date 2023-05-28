@@ -1,18 +1,18 @@
 package Model;
 
 public class Student {
-    private String sno;//学号
+    private int sno;//学号
     private String sname;//姓名
     private String major;//专业
     private String username;//用户名
     private String password;//密码
-    private int numOfBorrow = 0;//已借阅次数
+    private long numofborrow;//已借阅次数
 
     public Student() {
 
     }
 
-    public Student(String sno, String sname, String major, String username, String password) {
+    public Student(int sno, String sname, String major, String username, String password) {
         this.sno = sno;
         this.sname = sname;
         this.major = major;
@@ -20,11 +20,11 @@ public class Student {
         this.password = password;
     }
 
-    public String getSno() {
+    public int getSno() {
         return sno;
     }
 
-    public void setSno(String sno) {
+    public void setSno(int sno) {
         this.sno = sno;
     }
 
@@ -60,14 +60,14 @@ public class Student {
         this.password = password;
     }
 
-    public int getNumOfBorrow() {
-        return numOfBorrow;
+    public long getNumOfBorrow() {
+        return numofborrow;
     }
 
-    public void setNumOfBorrow(int numOfBorrow) {
-        this.numOfBorrow = numOfBorrow;
+    public void setNumOfBorrow(long numOfBorrow) {
+        this.numofborrow = numOfBorrow;
     }
     public String toString(){
-        return "学生{学号："+sno+" 姓名："+sname+" 专业："+major+" 已借阅数量："+numOfBorrow;
+        return "学生{学号："+sno+" 姓名："+sname+" 专业："+major+" 已借阅数量："+numofborrow;
     }
 }

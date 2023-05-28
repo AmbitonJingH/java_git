@@ -6,6 +6,7 @@ public class useMenu {
         System.out.println("=               1.查询书籍                 =");
         System.out.println("=               2.借阅书籍                 =");
         System.out.println("=               3.归还书籍                 =");
+        System.out.println("=               4.借阅记录                 =");
         System.out.println("==========================================");
     }
     public void userSelect(){

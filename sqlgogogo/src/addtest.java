@@ -3,14 +3,15 @@ import Dao.studentDao;
 import Service.Service;
 import Menu.useMenu;
 
+import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.Scanner;
 
 public class addtest {
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         test();
     }
-    public static void test() throws SQLException {
+    public static void test() throws SQLException, NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         loginAndRegistration login = new loginAndRegistration();
         useMenu usemenu = new useMenu();
         login.loginandregistration();
@@ -18,15 +19,14 @@ public class addtest {
         int a = input.nextInt();
         switch (a){
             case 1:
-                login.login();
-                int a1 = input.nextInt();
+                //int a1 = input.nextInt();
                 studentDao studentDao = new studentDao();
                 Service service = new Service();
-                switch (a1){
-                    case 1:
+               // switch (a1){
+               //     case 1:
 
-                        break;
-                    case 2:
+                    //    break;
+                  //  case 2:
                         service.loginStudent();
                         usemenu.userWelcome();
                         int a3 = input.nextInt();
@@ -35,17 +35,25 @@ public class addtest {
                                 usemenu.userSelect();
                                 int a4 = input.nextInt();
                                 switch (a4){
-                                    case 1:break;
+                                    case 1:
+                                        service.searchBookAsName();break;
                                     case 2:
-                                        studentDao.searchBook();break;
+                                        service.allBook();break;
                                 }
                                 break;
-                            case 2:break;
-                            case 3:break;
+                            case 2:
+                                service.borrowBook();
+                                break;
+                            case 3:
+                                service.returnBook();
+                                break;
+                            case 4:
+                                service.personBorrowRecode();
+                                break;
                         }
                         break;
-                }
-                break;
+              //  }
+               // break;
             case 2:
                 login.registration();
                 int a2 = input.nextInt();

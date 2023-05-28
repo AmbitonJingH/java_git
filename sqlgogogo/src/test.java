@@ -1,7 +1,6 @@
-import JDBCuntils.JDBCutil;
+import Utils.JDBCUtil;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -30,12 +29,12 @@ public class test {
 
 
 
-        JDBCutil jdbCutil = new JDBCutil();
-        Connection conn = jdbCutil.connection();
-        Statement statement = conn.createStatement();
-        String sql = "INSERT INTO S VALUES('011','nhahah','男',110,'土木')";
-        statement.executeUpdate(sql);
-        conn.close();
+//        JDBCUtil jdbCutil = new JDBCUtil();
+//        Connection conn = jdbCutil.connection();
+//        Statement statement = conn.createStatement();
+//        String sql = "INSERT INTO S VALUES('011','nhahah','男',110,'土木')";
+//        statement.executeUpdate(sql);
+//        conn.close();
 
 
     }

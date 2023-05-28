@@ -1,25 +1,25 @@
 package Model;
 
 public class Book {
-    private String bno;
+    private int bno;
     private String bname;
-    private int amount;
+    private long amount;
 
     public Book() {
 
     }
 
-    public Book(String bno, String bname, int amount) {
+    public Book(int bno, String bname, long amount) {
         this.bno = bno;
         this.bname = bname;
         this.amount = amount;
     }
 
-    public String getBno() {
+    public int getBno() {
         return bno;
     }
 
-    public void setBno(String bno) {
+    public void setBno(int bno) {
         this.bno = bno;
     }
 
@@ -31,11 +31,11 @@ public class Book {
         this.bname = bname;
     }
 
-    public int getAmount() {
+    public long getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(long amount) {
         this.amount = amount;
     }
 

@@ -1,7 +1,7 @@
 package Model;
 
 public class Teacher {
-    private String tno;
+    private int tno;
     private String tname;
     private String title;
     private String username;
@@ -12,7 +12,7 @@ public class Teacher {
 
     }
 
-    public Teacher(String tno, String tname, String title, String username, String password) {
+    public Teacher(int tno, String tname, String title, String username, String password) {
         this.tno = tno;
         this.tname = tname;
         this.title = title;
@@ -20,11 +20,11 @@ public class Teacher {
         this.password = password;
     }
 
-    public String getTno() {
+    public int getTno() {
         return tno;
     }
 
-    public void setTno(String tno) {
+    public void setTno(int tno) {
         this.tno = tno;
     }
 
