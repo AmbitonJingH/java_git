@@ -1,3 +1,4 @@
+import Menu.AdminMenu;
 import Menu.loginAndRegistration;
 import Dao.studentDao;
 import Service.Service;
@@ -14,8 +15,10 @@ public class addtest {
     public static void test() throws SQLException, NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         loginAndRegistration login = new loginAndRegistration();
         useMenu usemenu = new useMenu();
-        login.loginandregistration();
         Scanner input = new Scanner(System.in);
+        studentDao studentDaod = new studentDao();
+
+        login.loginandregistration();
         int a = input.nextInt();
         switch (a){
             case 1:
@@ -27,31 +30,54 @@ public class addtest {
 
                     //    break;
                   //  case 2:
-                        service.loginStudent();
-                        usemenu.userWelcome();
-                        int a3 = input.nextInt();
-                        switch (a3){
-                            case 1:
-                                usemenu.userSelect();
-                                int a4 = input.nextInt();
-                                switch (a4){
-                                    case 1:
-                                        service.searchBookAsName();break;
-                                    case 2:
-                                        service.allBook();break;
-                                }
-                                break;
-                            case 2:
-                                service.borrowBook();
-                                break;
-                            case 3:
-                                service.returnBook();
-                                break;
-                            case 4:
-                                service.personBorrowRecode();
-                                break;
-                        }
-                        break;
+
+                    service.loginStudent();
+                    String check = studentDao.check();
+                if(!check.equals("管理员")) {
+                    usemenu.userWelcome();
+                    int a3 = input.nextInt();
+                    switch (a3) {
+                        case 1:
+                            usemenu.userSelect();
+                            int a4 = input.nextInt();
+                            switch (a4) {
+                                case 1:
+                                    service.searchBookAsName();
+                                    break;
+                                case 2:
+                                    service.allBook();
+                                    break;
+                            }
+                            break;
+                        case 2:
+                            service.borrowBook();
+                            break;
+                        case 3:
+                            service.returnBook();
+                            break;
+                        case 4:
+                            service.personBorrowRecode();
+                            break;
+                    }
+                    break;
+                }else{
+                    AdminMenu adminMenu = new AdminMenu();
+                    adminMenu.firstMenu();
+                    int admi;
+                    System.out.println("请输入你的操作：");
+                    admi = input.nextInt();
+                    switch (admi){
+                        case 1:
+                            service.allBook();
+                            break;
+                        case 2:
+                            service.addBook();
+                            break;
+                        case 3:
+                            service.adminBorrowRecode();
+                            break;
+                    }
+                }
               //  }
                // break;
             case 2:

@@ -2,27 +2,27 @@ package Model;
 
 import java.sql.Date;
 
-public class stuBorrow {
-    private int sno;
+public class Borrow {
+    private int uno;
     private int bno;
     private Date borrowTime = new java.sql.Date(System.currentTimeMillis());
     private Date returnTime;
 
-    public stuBorrow() {
+    public Borrow() {
     }
 
-    public stuBorrow(int sno, int bno, Date borrowTime) {
-        this.sno = sno;
+    public Borrow(int uno, int bno, Date borrowTime) {
+        this.uno = uno;
         this.bno = bno;
         this.borrowTime = borrowTime;
     }
 
     public int getSno() {
-        return sno;
+        return uno;
     }
 
     public void setSno(int sno) {
-        this.sno = sno;
+        this.uno = sno;
     }
 
     public int getBno() {
@@ -50,6 +50,6 @@ public class stuBorrow {
     }
 
     public String toString(){
-        return "学生借阅信息{学号："+sno+" 书籍号："+bno+" 借阅时间："+borrowTime+" 归还时间："+returnTime+"}\n";
+        return "学生借阅信息{学号："+uno+" 书籍号："+bno+" 借阅时间："+borrowTime+" 归还时间："+returnTime+"}\n";
     }
 }

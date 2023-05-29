@@ -11,15 +11,28 @@ public abstract class BaseDao {
     public int executeUpdate(String sql,Object... params) throws SQLException {
         Connection connection = JDBCUtil.getConnection();
         PreparedStatement statement = connection.prepareStatement(sql);
-        for(int i =1;i<= params.length;i++){
-            statement.setObject(i,params[i-1]);
+        int rows;
+        try {
+            connection.setAutoCommit(false);
+            for(int i =1;i<= params.length;i++){
+                statement.setObject(i,params[i-1]);
 
-        }
-        int rows = statement.executeUpdate();
-        statement.close();
-        if(connection.getAutoCommit()){
+            }
+            connection.commit();
+
+        } catch (Exception e) {
+            connection.rollback();
+            e.printStackTrace();
+        }finally {
+            rows = statement.executeUpdate();
+            statement.close();
             JDBCUtil.freeConnection();
         }
+
+
+//        if(connection.getAutoCommit()){
+//            JDBCUtil.freeConnection();
+//        }
         return rows;
     }
 

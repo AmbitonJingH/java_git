@@ -2,7 +2,6 @@ package Dao;
 
 import Model.*;
 import Utils.BaseDao;
-import Utils.JDBCUtil;
 import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;
@@ -10,17 +9,16 @@ import java.sql.*;
 import java.util.List;
 
 public class studentDao extends BaseDao {
-    private static int sno;
-    private static int tno;
+    private static int uno;
     private static String username;
     private static String password;
 
-    public void zhuceStudent(Student s) throws SQLException {
+    public void zhuceStudent(Users u) throws SQLException {
 
-        String sql ="INSERT INTO student(sname,major,username,password,numofborrow)"+"VALUES("+"?,?,?,?,?)";
-        String sql1 = "INSERT INTO users(username,password,id) VALUES(?,?,?)";
-        int rows = executeUpdate(sql,s.getSname(),s.getMajor(),s.getUsername(),s.getPassword(),s.getNumOfBorrow());
-        executeUpdate(sql1,s.getUsername(),s.getPassword(),"学生");
+        String sql ="INSERT INTO users(uname,major,username,password,numofborrow,id)"+"VALUES("+"?,?,?,?,?,?)";
+
+        int rows = executeUpdate(sql,u.getUname(),u.getMajor(),u.getUsername(),u.getPassword(),u.getNumofborrow(),u.getId());
+        //executeUpdate(sql1,s.getUsername(),s.getPassword(),"学生");
         if(rows>0){
             System.out.println("注册成功");
         }else{
@@ -41,12 +39,12 @@ public class studentDao extends BaseDao {
 //        }
 //    }
 
-    public void zhuceTeacher(Teacher t) throws SQLException {
+    public void zhuceTeacher(Users u) throws SQLException {
 
-        String sql ="INSERT INTO teacher(tname,title,username,password,numofborrow)"+"VALUES("+"?,?,?,?,?)";
-        int rows = executeUpdate(sql,t.getTname(),t.getTitle(),t.getUsername(),t.getPassword(),t.getNumOfBorrow());
-        String sql1 = "INSERT INTO users(username,password,id) VALUES(?,?,?)";
-        executeUpdate(sql1,t.getUsername(),t.getPassword(),t.getTitle());
+        String sql ="INSERT INTO users(uname,major,username,password,numofborrow,id)"+"VALUES("+"?,?,?,?,?,?)";
+
+        int rows = executeUpdate(sql,u.getUname(),u.getMajor(),u.getUsername(),u.getPassword(),u.getNumofborrow(),u.getId());
+        //executeUpdate(sql1,s.getUsername(),s.getPassword(),"学生");
         if(rows>0){
             System.out.println("注册成功");
         }else{
@@ -96,39 +94,39 @@ public class studentDao extends BaseDao {
 
     }
 
-    public void borrowBook(stuBorrow stubook) throws SQLException, NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    public void borrowBook(Borrow stubook) throws SQLException, NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
         boolean notnull = true;
-        String sql1 = "select sno from student where username=? AND password=?;";
-        List<Student> students = executeQuery(Student.class,sql1,username,password);
-        Student s = students.get(0);
-        sno = s.getSno();
+        String sql1 = "select uno from users where username=? AND password=?;";
+        List<Users> users = executeQuery(Users.class,sql1,username,password);
+        Users s = users.get(0);
+        uno = s.getUno();
 
-        String sql6 = "select returnTime from stuborrow where sno=? and bno=?;";
-        List<stuBorrow> stuBorrows = executeQuery(stuBorrow.class,sql6,sno,stubook.getBno());
-        stuBorrow borrow = null;
+        String sql6 = "select returnTime from borrow where uno=? and bno=?;";
+        List<Borrow> Borrows = executeQuery(Borrow.class,sql6,uno,stubook.getBno());
+        Borrow borrow = null;
         Date rdate = null;
-        for(int i =0;i<stuBorrows.size();i++) {
-            borrow = stuBorrows.get(i);
+        for(int i = 0; i< Borrows.size(); i++) {
+            borrow = Borrows.get(i);
             rdate = borrow.getReturnTime();
             if(rdate==null)
                 notnull = false;
         }
         if(notnull) {
-            String sql = "INSERT INTO stuborrow(sno,bno,borrowTime) VALUES(?,?,?)";
-            int rows = executeUpdate(sql, sno, stubook.getBno(), stubook.getBorrowTime());
+            String sql = "INSERT INTO borrow(uno,bno,borrowTime) VALUES(?,?,?)";
+            int rows = executeUpdate(sql, uno, stubook.getBno(), stubook.getBorrowTime());
             if (rows > 0) {
 
-                String sql3 = "select numofborrow from student where sno =?;";
-                List<Student> students1 = executeQuery(Student.class, sql3, sno);
+                String sql3 = "select numofborrow from users where uno =?;";
+                List<Student> students1 = executeQuery(Student.class, sql3, uno);
                 System.out.println(students1);
                 Student s1 = students1.get(0);
                 long numofborrow = s1.getNumOfBorrow();
                 System.out.println(numofborrow);
-                if (numofborrow < 6) {
-                    System.out.println(sno);
-                    String sql2 = "update student set numofborrow=? where sno=?;";
-                    executeUpdate(sql2, numofborrow + 1, sno);
+                if (numofborrow < 5) {
+                    System.out.println(uno);
+                    String sql2 = "update users set numofborrow=? where uno=?;";
+                    executeUpdate(sql2, numofborrow + 1, uno);
 
                     String sql5 = "select amount from book where bno =?;";
                     List<Book> books = executeQuery(Book.class, sql5, stubook.getBno());
@@ -147,29 +145,29 @@ public class studentDao extends BaseDao {
             System.out.println("借阅失败");
         }
     }
-    public void returnBook(stuBorrow temp) throws SQLException, NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    public void returnBook(Borrow temp) throws SQLException, NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
         Date date = new java.sql.Date(System.currentTimeMillis());
 
-        String sql1 = "select sno from student where username=? AND password=?;";
-        List<Student> students = executeQuery(Student.class,sql1,username,password);
-        Student s = students.get(0);
-        sno = s.getSno();
+        String sql1 = "select uno from users where username=? AND password=?;";
+        List<Users> students = executeQuery(Users.class,sql1,username,password);
+        Users s = students.get(0);
+        uno = s.getUno();
 
-        String sql = "update stuborrow set returnTime=? where sno=? and bno=?;";
-        int rows = executeUpdate(sql,date,sno,temp.getBno());
+        String sql = "update borrow set returnTime=? where uno=? and bno=?;";
+        int rows = executeUpdate(sql,date,uno,temp.getBno());
 
         if(rows>0){
-            String sql3 = "select numofborrow from student where sno =?;";
-            List<Student> students1 = executeQuery(Student.class,sql3,sno);
+            String sql3 = "select numofborrow from users where uno =?;";
+            List<Student> students1 = executeQuery(Student.class,sql3,uno);
             System.out.println(students1);
             Student s1 = students1.get(0);
             long numofborrow = s1.getNumOfBorrow();
             System.out.println(numofborrow);
-            if(numofborrow<6) {
-                System.out.println(sno);
-                String sql2 = "update student set numofborrow=? where sno=?;";
-                executeUpdate(sql2, numofborrow-1, sno);
+            if(numofborrow<5) {
+                System.out.println(uno);
+                String sql2 = "update users set numofborrow=? where uno=?;";
+                executeUpdate(sql2, numofborrow-1, uno);
 
                 String sql5 = "select amount from book where bno =?;";
                 List<Book> books = executeQuery(Book.class, sql5, temp.getBno());
@@ -188,17 +186,36 @@ public class studentDao extends BaseDao {
 
     }
 
-    public void personBorrow(stuBorrow stuBorrow) throws SQLException, NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    public void personBorrow(Borrow Borrow) throws SQLException, NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
-        String sql1 = "select sno from student where username=? AND password=?;";
-        List<Student> students = executeQuery(Student.class,sql1,username,password);
-        Student s = students.get(0);
-        sno = s.getSno();
-        System.out.println(sno);
-        String sql = "select * from stuborrow where sno=?;";
-        List<stuBorrow> stuBorrows = executeQuery(stuBorrow.class,sql,sno);
-        System.out.println(stuBorrows);
+        String sql1 = "select uno from users where username=? AND password=?;";
+        List<Users> students = executeQuery(Users.class,sql1,username,password);
+        Users s = students.get(0);
+        uno = s.getUno();
+        System.out.println(uno);
+        String sql = "select * from borrow where uno=?;";
+        List<Borrow> Borrows = executeQuery(Borrow.class,sql,uno);
+        System.out.println(Borrows);
     }
+
+    public void adminBorrow(Borrow Borrow) throws SQLException, NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+
+        String sql = "select * from borrow;";
+        List<Borrow> Borrows = executeQuery(Borrow.class,sql);
+        System.out.println(Borrows);
+    }
+
+    public String check() throws SQLException, NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+
+        String sql = "select id from users where username=? and password=?";
+        List<Users> students = executeQuery(Users.class,sql,username,password);
+        Users s = students.get(0);
+        String id = s.getId();
+        System.out.println(id);
+        return id;
+
+    }
+
  //   @Test
 //    public void test() throws SQLException, NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 //        stuBorrow stuBorrow = new stuBorrow();
