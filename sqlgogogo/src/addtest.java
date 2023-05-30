@@ -17,69 +17,85 @@ public class addtest {
         useMenu usemenu = new useMenu();
         Scanner input = new Scanner(System.in);
         studentDao studentDaod = new studentDao();
-
+        boolean isloginandregistrationOpen = true;
+        boolean isusewelcome = true;
+        boolean isuseselect = true;
+        while (isloginandregistrationOpen){
         login.loginandregistration();
         int a = input.nextInt();
         switch (a){
+            case 0:
+                isloginandregistrationOpen = false;
+                break;
             case 1:
-                //int a1 = input.nextInt();
+
                 studentDao studentDao = new studentDao();
                 Service service = new Service();
-               // switch (a1){
-               //     case 1:
+                String loginSituation = service.loginStudent();
+                    if(loginSituation.equals("登陆成功")) {
+                        String check = studentDao.check();
+                        while (isusewelcome) {
+                            if (!check.equals("管理员")) {
 
-                    //    break;
-                  //  case 2:
+                                usemenu.userWelcome();
+                                int a3 = input.nextInt();
+                                switch (a3) {
+                                    case 0:
+                                        isusewelcome = false;
+                                        break;
+                                    case 1:
+                                        while (isuseselect) {
 
-                    service.loginStudent();
-                    String check = studentDao.check();
-                if(!check.equals("管理员")) {
-                    usemenu.userWelcome();
-                    int a3 = input.nextInt();
-                    switch (a3) {
-                        case 1:
-                            usemenu.userSelect();
-                            int a4 = input.nextInt();
-                            switch (a4) {
-                                case 1:
-                                    service.searchBookAsName();
-                                    break;
-                                case 2:
-                                    service.allBook();
-                                    break;
+                                            usemenu.userSelect();
+                                            int a4 = input.nextInt();
+                                            switch (a4) {
+                                                case 0:
+                                                    isuseselect = false;
+                                                    break;
+                                                case 1:
+                                                    service.searchBookAsName();
+                                                    break;
+                                                case 2:
+                                                    service.allBook();
+                                                    break;
+                                            }
+                                        }
+                                        break;
+                                    case 2:
+                                        service.borrowBook();
+                                        break;
+                                    case 3:
+                                        service.returnBook();
+                                        break;
+                                    case 4:
+                                        service.personBorrowRecode();
+                                        break;
+                                }
+                               // break;
+                            } else {
+                                AdminMenu adminMenu = new AdminMenu();
+                                adminMenu.firstMenu();
+                                int admi;
+                                System.out.println("请输入你的操作：");
+                                admi = input.nextInt();
+                                switch (admi) {
+                                    case 1:
+                                        service.allBook();
+                                        break;
+                                    case 2:
+                                        service.addBook();
+                                        break;
+                                    case 3:
+                                        service.adminBorrowRecode();
+                                        break;
+                                }
                             }
-                            break;
-                        case 2:
-                            service.borrowBook();
-                            break;
-                        case 3:
-                            service.returnBook();
-                            break;
-                        case 4:
-                            service.personBorrowRecode();
-                            break;
+                        }
+                    }else{
+                        break;
                     }
-                    break;
-                }else{
-                    AdminMenu adminMenu = new AdminMenu();
-                    adminMenu.firstMenu();
-                    int admi;
-                    System.out.println("请输入你的操作：");
-                    admi = input.nextInt();
-                    switch (admi){
-                        case 1:
-                            service.allBook();
-                            break;
-                        case 2:
-                            service.addBook();
-                            break;
-                        case 3:
-                            service.adminBorrowRecode();
-                            break;
-                    }
-                }
               //  }
-               // break;
+                break;
             case 2:
                 login.registration();
                 int a2 = input.nextInt();
@@ -98,4 +114,5 @@ public class addtest {
                 break;
         }
     }
+}
 }

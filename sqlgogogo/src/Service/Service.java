@@ -50,7 +50,7 @@ public class Service {
 
     }
 
-    public void loginStudent() throws SQLException, NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    public String loginStudent() throws SQLException, NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
         Users student = new Users();
         studentDao studentDao = new studentDao();
@@ -58,7 +58,8 @@ public class Service {
         student.setUsername(input.next());
         System.out.println("请输入密码：");
         student.setPassword(input.next());
-        studentDao.login(student);
+        String a =studentDao.login(student);
+        return a;
 
     }
 

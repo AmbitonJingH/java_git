@@ -50,6 +50,6 @@ public class Borrow {
     }
 
     public String toString(){
-        return "学生借阅信息{学号："+uno+" 书籍号："+bno+" 借阅时间："+borrowTime+" 归还时间："+returnTime+"}\n";
+        return "\t用户借阅信息{用户号："+uno+" 书籍号："+bno+" 借阅时间："+borrowTime+" 归还时间："+returnTime+"}\n";
     }
 }

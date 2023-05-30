@@ -6,7 +6,9 @@ public class loginAndRegistration {
         System.out.println("==========================================");
         System.out.println("=                  1.登录                 =");
         System.out.println("=                  2.注册                 =");
+        System.out.println("=                  0.退出                 =");
         System.out.println("==========================================");
+        System.out.println("请输入要进行的操作：");
     }
 
     public void login(){
@@ -23,6 +25,7 @@ public class loginAndRegistration {
         System.out.println("=                  1.教师                 =");
         System.out.println("=                  2.学生                 =");
         System.out.println("==========================================");
+        System.out.println("请输入要进行的操作：");
     }
 
 
