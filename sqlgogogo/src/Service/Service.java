@@ -75,7 +75,7 @@ public class Service {
         //teacherDao.loginTeacher(teacher);
     }
 
-    public void addBook(){
+    public void addBook() throws SQLException {
 
         studentDao studentDao = new studentDao();
         Book b = new Book();
@@ -83,7 +83,7 @@ public class Service {
         b.setBname(input.next());
         System.out.println("请输入数量：");
         b.setAmount(input.nextInt());
-
+        studentDao.addBook(b);
 
     }
 

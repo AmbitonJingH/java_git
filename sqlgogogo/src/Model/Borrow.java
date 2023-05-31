@@ -1,12 +1,14 @@
 package Model;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Borrow {
     private int uno;
     private int bno;
-    private Date borrowTime = new java.sql.Date(System.currentTimeMillis());
+  //  private Date borrowTime = new java.sql.Date(System.currentTimeMillis());
     private Date returnTime;
+    private Date borrowTime = new Date(System.currentTimeMillis());
 
     public Borrow() {
     }

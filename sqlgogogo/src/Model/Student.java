@@ -6,7 +6,7 @@ public class Student {
     private String major;//专业
     private String username;//用户名
     private String password;//密码
-    private long numofborrow;//已借阅次数
+    private int numofborrow;//已借阅次数
 
     public Student() {
 
@@ -60,11 +60,11 @@ public class Student {
         this.password = password;
     }
 
-    public long getNumOfBorrow() {
+    public int getNumOfBorrow() {
         return numofborrow;
     }
 
-    public void setNumOfBorrow(long numOfBorrow) {
+    public void setNumOfBorrow(int numOfBorrow) {
         this.numofborrow = numOfBorrow;
     }
     public String toString(){

@@ -17,14 +17,18 @@ public class studentDao extends BaseDao {
 
     public void zhuceStudent(Users u) throws SQLException {
 
-        String sql ="INSERT INTO users(uname,major,username,password,numofborrow,id)"+"VALUES("+"?,?,?,?,?,?)";
+        try {
+            String sql ="INSERT INTO users(uname,major,username,password,numofborrow,id)"+"VALUES("+"?,?,?,?,?,?)";
 
-        int rows = executeUpdate(sql,u.getUname(),u.getMajor(),u.getUsername(),u.getPassword(),u.getNumofborrow(),u.getId());
-        //executeUpdate(sql1,s.getUsername(),s.getPassword(),"学生");
-        if(rows>0){
-            System.out.println("注册成功");
-        }else{
-            System.out.println("注册失败");
+            int rows = executeUpdate(sql,u.getUname(),u.getMajor(),u.getUsername(),u.getPassword(),u.getNumofborrow(),u.getId());
+            //executeUpdate(sql1,s.getUsername(),s.getPassword(),"学生");
+            if(rows>0){
+                System.out.println("注册成功");
+            }else{
+                System.out.println("注册失败");
+            }
+        } catch (Exception e) {
+            System.out.println("注册失败，用户名已存在！");
         }
 
     }
@@ -32,21 +36,25 @@ public class studentDao extends BaseDao {
 
     public void zhuceTeacher(Users u) throws SQLException {
 
-        String sql ="INSERT INTO users(uname,major,username,password,numofborrow,id)"+"VALUES("+"?,?,?,?,?,?)";
+        try {
+            String sql ="INSERT INTO users(uname,major,username,password,numofborrow,id)"+"VALUES("+"?,?,?,?,?,?)";
 
-        int rows = executeUpdate(sql,u.getUname(),u.getMajor(),u.getUsername(),u.getPassword(),u.getNumofborrow(),u.getId());
-        //executeUpdate(sql1,s.getUsername(),s.getPassword(),"学生");
-        if(rows>0){
-            System.out.println("注册成功");
-        }else{
-            System.out.println("注册失败");
+            int rows = executeUpdate(sql,u.getUname(),u.getMajor(),u.getUsername(),u.getPassword(),u.getNumofborrow(),u.getId());
+            //executeUpdate(sql1,s.getUsername(),s.getPassword(),"学生");
+            if(rows>0){
+                System.out.println("注册成功");
+            }else{
+                System.out.println("注册失败");
+            }
+        } catch (Exception e) {
+            System.out.println("注册失败，用户名已存在！");
         }
 
     }
 
     public String login(Users user) throws SQLException, NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
-        String sql = "SELECT * FROM users WHERE binary username=? AND PASSWORD=?;";
+        String sql = "SELECT * FROM users WHERE binary username=? AND PASSWORD=?";
         String loginSituatio;
         List<Users> users = executeQuery(Users.class, sql, user.getUsername(), user.getPassword());
     //    tno = t.getTno();
@@ -74,7 +82,7 @@ public class studentDao extends BaseDao {
     }
     public void searchBook() throws SQLException, NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
-        String sql = "SELECT * FROM book;";
+        String sql = "SELECT * FROM book";
         List<Book> books =  executeQuery(Book.class,sql);
 
         System.out.println(books);
@@ -82,7 +90,7 @@ public class studentDao extends BaseDao {
     }
     public void searchBookAsName(Book book) throws SQLException, NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
-        String sql = "SELECT * FROM book where bname=?;";
+        String sql = "SELECT * FROM book where bname=?";
         List<Book> books =  executeQuery(Book.class,sql,book.getBname());
 
         System.out.println(books);
@@ -92,6 +100,7 @@ public class studentDao extends BaseDao {
     public void borrowBook(Borrow stubook) throws SQLException, NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
         Connection connection = JDBCUtil.getConnection();
+
         boolean notnull = true;
         int setnum;
         if(check().equals("学生")){
@@ -104,61 +113,72 @@ public class studentDao extends BaseDao {
             setnum=10;
         }
         try {
-            connection.setAutoCommit(false);
-            String sql1 = "select uno from users where username=? AND password=?;";
-            List<Users> users = executeQuery(Users.class, sql1, username, password);
+            String sql1 = "select uno from users where username=? AND password=?";
+            List<Users> users = executeQuery1(Users.class, sql1, username, password);
             Users s = users.get(0);
             uno = s.getUno();
 
-            String sql6 = "select returnTime from borrow where uno=? and bno=?;";
-            List<Borrow> Borrows = executeQuery(Borrow.class, sql6, uno, stubook.getBno());
+            String sql6 = "select returnTime from borrow where uno=? and bno=?";
+            List<Borrow> Borrows = executeQuery1(Borrow.class, sql6, uno, stubook.getBno());
             Borrow borrow = null;
-            Date rdate = null;
+            Date temp = null;
             for (int i = 0; i < Borrows.size(); i++) {
                 borrow = Borrows.get(i);
-                rdate = borrow.getReturnTime();
-                if (rdate == null)
+                temp = borrow.getReturnTime();
+                if (temp == null)
                     notnull = false;
             }
             if (notnull) {
-                String sql = "INSERT INTO borrow(uno,bno,borrowTime) VALUES(?,?,?)";
-                int rows = executeUpdate(sql, uno, stubook.getBno(), stubook.getBorrowTime());
-                if (rows > 0) {
 
-                    String sql3 = "select numofborrow from users where uno =?;";
-                    List<Users> students1 = executeQuery(Users.class, sql3, uno);
-                    //System.out.println(students1);
-                    Users s1 = students1.get(0);
-                    long numofborrow = s1.getNumofborrow();
-                   // System.out.println(numofborrow);
-                    if (numofborrow < setnum) {
-                        System.out.println(uno);
-                        String sql2 = "update users set numofborrow=? where uno=?;";
-                        executeUpdate(sql2, numofborrow + 1, uno);
+                    String sql = "INSERT INTO borrow(uno,bno,borrowTime) VALUES(?,?,?)";
+                    int rows = executeUpdate1(sql, uno, stubook.getBno(), stubook.getBorrowTime());
+                    if (rows > 0) {
 
-                        String sql5 = "select amount from book where bno =?;";
-                        List<Book> books = executeQuery(Book.class, sql5, stubook.getBno());
-                        Book book = books.get(0);
-                        long amount = book.getAmount();
+                        String sql3 = "select numofborrow from users where uno =?";
+                        List<Users> students1 = executeQuery1(Users.class, sql3, uno);
 
-                        String sql4 = "update book set amount =? where bno =?;";
-                        executeUpdate(sql4, amount - 1, stubook.getBno());
-                        System.out.println("借阅成功");
-                    } else {
-                        System.out.println("借阅次数已到达最大限度！！");
+                        Users s1 = students1.get(0);
+                        long numofborrow = s1.getNumofborrow();
+
+                        if (numofborrow < setnum) {
+                            System.out.println(uno);
+                            String sql2 = "update users set numofborrow=? where uno=?";
+                            executeUpdate1(sql2, numofborrow + 1, uno);
+
+                            String sql5 = "select amount from book where bno =?";
+                            List<Book> books = executeQuery1(Book.class, sql5, stubook.getBno());
+                            Book book = books.get(0);
+                            long amount = book.getAmount();
+
+                            String sql4 = "update book set amount =? where bno =?";
+                            executeUpdate1(sql4, amount - 1, stubook.getBno());
+                            System.out.println("借阅成功");
+                            connection.commit();
+                            connection.setAutoCommit(true);
+                            //connection.close();
+                        } else {
+                            System.out.println("借阅次数已到达最大限度！！");
+                        }
                     }
-
-                }
+                }else{
+                System.out.println("这本书你还未归还！");
             }
-            connection.commit();
-
-        }catch (Exception e){
-
+        } catch (SQLException e) {
             connection.rollback();
             System.out.println("借阅失败");
-
+            connection.setAutoCommit(true);
+            //connection.close();
+            //e.printStackTrace();
         }
+
     }
+//    @Test
+//    public void test() throws SQLException, NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+//        String sql1 = "select uno from users where username=? AND password=?";
+//        List<Users> users = executeQuery(Users.class, sql1, username, password);
+//        Users s = users.get(0);
+//        uno = s.getUno();
+//    }
     public void returnBook(Borrow temp) throws SQLException, NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
         Date date = new java.sql.Date(System.currentTimeMillis());
@@ -168,35 +188,40 @@ public class studentDao extends BaseDao {
         Users s = students.get(0);
         uno = s.getUno();
 
-        String sql = "update borrow set returnTime=? where uno=? and bno=?;";
-        int rows = executeUpdate(sql,date,uno,temp.getBno());
+//        String sql6 = "select returnTime from borrow where uno=? and bno=?";
+//        List<Borrow> borrows = executeQuery(Borrow.class,sql6,uno,temp.getBno());
+//        Borrow b = borrows.get(0);
+//        Date d = b.getReturnTime();
+//        if(d==null) {
+            String sql = "update borrow set returnTime=? where uno=? and bno=? and returnTime is null";
+            int rows = executeUpdate(sql, date, uno, temp.getBno());
 
-        if(rows>0){
-            String sql3 = "select numofborrow from users where uno =?;";
-            List<Student> students1 = executeQuery(Student.class,sql3,uno);
-            System.out.println(students1);
-            Student s1 = students1.get(0);
-            long numofborrow = s1.getNumOfBorrow();
-            System.out.println(numofborrow);
-            if(numofborrow<5) {
-                System.out.println(uno);
-                String sql2 = "update users set numofborrow=? where uno=?;";
-                executeUpdate(sql2, numofborrow-1, uno);
+            if (rows > 0) {
+                String sql3 = "select numofborrow from users where uno =?;";
+                List<Users> students1 = executeQuery(Users.class, sql3, uno);
 
-                String sql5 = "select amount from book where bno =?;";
-                List<Book> books = executeQuery(Book.class, sql5, temp.getBno());
-                Book book = books.get(0);
-                long amount = book.getAmount();
+                Users s1 = students1.get(0);
+                long numofborrow = s1.getNumofborrow();
+                if (numofborrow < 5) {
+                    System.out.println(uno);
+                    String sql2 = "update users set numofborrow=? where uno=?;";
+                    executeUpdate(sql2, numofborrow - 1, uno);
 
-                String sql4 = "update book set amount =? where bno =?;";
-                executeUpdate(sql4, amount + 1, temp.getBno());
-                System.out.println("归还成功");
+                    String sql5 = "select amount from book where bno =?;";
+                    List<Book> books = executeQuery(Book.class, sql5, temp.getBno());
+                    Book book = books.get(0);
+                    long amount = book.getAmount();
+
+                    String sql4 = "update book set amount =? where bno =?;";
+                    executeUpdate(sql4, amount + 1, temp.getBno());
+                    System.out.println("归还成功");
+                }
+            } else {
+                System.out.println("归还失败");
             }
-
-
-        }else{
-            System.out.println("归还失败");
-        }
+//        }else{
+//            System.out.println("这本书已归还");
+//        }
 
     }
 
@@ -229,6 +254,22 @@ public class studentDao extends BaseDao {
         String id = s.getId();
         //System.out.println(id);
         return id;
+
+    }
+
+    public void addBook(Book book) throws SQLException {
+
+        try {
+            String sql ="insert into book(bno,bname,amount) values(?,?,?)";
+            int rows = executeUpdate(sql,book.getBno(),book.getBname(),book.getAmount());
+            if(rows>0){
+                System.out.println("添加成功");
+            }else{
+                System.out.println("添加失败");
+            }
+        } catch (Exception e) {
+            System.out.println("添加失败，该书已存在！");
+        }
 
     }
 

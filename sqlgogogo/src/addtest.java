@@ -76,9 +76,12 @@ public class addtest {
                                 AdminMenu adminMenu = new AdminMenu();
                                 adminMenu.firstMenu();
                                 int admi;
-                                System.out.println("请输入你的操作：");
+                                //System.out.println("请输入要进行的操作：");
                                 admi = input.nextInt();
                                 switch (admi) {
+                                    case 0:
+                                        isusewelcome = false;
+                                        break;
                                     case 1:
                                         service.allBook();
                                         break;
@@ -104,11 +107,11 @@ public class addtest {
                 switch (a2){
                     case 1:
                         service1.zhuceTeacher();
-                        System.out.println("注册成功！");
+                       // System.out.println("注册成功！");
                         break;
                     case 2:
                         service1.zhuceStudent();
-                        System.out.println("注册成功！");
+                       // System.out.println("注册成功！");
                         break;
                 }
                 break;
