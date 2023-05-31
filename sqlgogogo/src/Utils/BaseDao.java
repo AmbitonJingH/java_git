@@ -28,7 +28,7 @@ public abstract class BaseDao {
     }
     public int executeUpdate1(String sql,Object... params) throws SQLException {
         Connection connection = JDBCUtil.getConnection();
-        connection.setAutoCommit(true);
+        connection.setAutoCommit(false);
         PreparedStatement statement = connection.prepareStatement(sql);
 
         for(int i =1;i<= params.length;i++) {
@@ -38,7 +38,7 @@ public abstract class BaseDao {
         int rows = statement.executeUpdate();
         statement.close();
 
-        System.out.println(connection.getAutoCommit());
+      //  System.out.println(connection.getAutoCommit());
 //        if(connection.getAutoCommit()){
 //            JDBCUtil.freeConnection();
 //        }
@@ -48,7 +48,7 @@ public abstract class BaseDao {
     public <T> List<T> executeQuery(Class<T> tclass, String sql, Object... params) throws SQLException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchFieldException {
 
         Connection connection = JDBCUtil.getConnection();
-        connection.setAutoCommit(false);
+        connection.setAutoCommit(true);
         PreparedStatement statement = connection.prepareStatement(sql);
 
         for(int i =1;i<= params.length;i++){
@@ -115,9 +115,9 @@ public abstract class BaseDao {
         resultSet.close();
         statement.close();
 
-        if(connection.getAutoCommit()){
-            JDBCUtil.freeConnection();
-        }
+//        if(connection.getAutoCommit()){
+//            JDBCUtil.freeConnection();
+//        }
 
         return list;
     }

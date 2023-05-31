@@ -121,7 +121,7 @@ public class studentDao extends BaseDao {
             String sql6 = "select returnTime from borrow where uno=? and bno=?";
             List<Borrow> Borrows = executeQuery1(Borrow.class, sql6, uno, stubook.getBno());
             Borrow borrow = null;
-            Date temp = null;
+            Timestamp temp = null;
             for (int i = 0; i < Borrows.size(); i++) {
                 borrow = Borrows.get(i);
                 temp = borrow.getReturnTime();
@@ -153,21 +153,27 @@ public class studentDao extends BaseDao {
                             String sql4 = "update book set amount =? where bno =?";
                             executeUpdate1(sql4, amount - 1, stubook.getBno());
                             System.out.println("借阅成功");
-                            connection.commit();
-                            connection.setAutoCommit(true);
+                            Connection connection1 = JDBCUtil.getConnection();
+                            connection1.commit();
+                           // connection1.commit();
                             //connection.close();
                         } else {
                             System.out.println("借阅次数已到达最大限度！！");
+                            Connection connection1 = JDBCUtil.getConnection();
+                            connection1.setAutoCommit(false);
+                            connection1.rollback();
                         }
                     }
                 }else{
                 System.out.println("这本书你还未归还！");
             }
-        } catch (SQLException e) {
-            connection.rollback();
+        } catch (Exception e) {
+           // connection.setAutoCommit(false);
+            Connection connection1 = JDBCUtil.getConnection();
+            connection1.rollback();
             System.out.println("借阅失败");
-            connection.setAutoCommit(true);
-            //connection.close();
+            //connection.setAutoCommit(true);
+           // connection.close();
             //e.printStackTrace();
         }
 
@@ -181,44 +187,57 @@ public class studentDao extends BaseDao {
 //    }
     public void returnBook(Borrow temp) throws SQLException, NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
-        Date date = new java.sql.Date(System.currentTimeMillis());
+        Timestamp date = new Timestamp(System.currentTimeMillis());
+        Connection connection = JDBCUtil.getConnection();
 
+//        int setNum;
+//        String
         String sql1 = "select uno from users where username=? AND password=?;";
-        List<Users> students = executeQuery(Users.class,sql1,username,password);
+        List<Users> students = executeQuery1(Users.class,sql1,username,password);
         Users s = students.get(0);
         uno = s.getUno();
-
+      //  System.out.println("1");
 //        String sql6 = "select returnTime from borrow where uno=? and bno=?";
 //        List<Borrow> borrows = executeQuery(Borrow.class,sql6,uno,temp.getBno());
 //        Borrow b = borrows.get(0);
 //        Date d = b.getReturnTime();
 //        if(d==null) {
+       // try {
             String sql = "update borrow set returnTime=? where uno=? and bno=? and returnTime is null";
-            int rows = executeUpdate(sql, date, uno, temp.getBno());
+            int rows = executeUpdate1(sql, date, uno, temp.getBno());
+            //System.out.println(rows);
 
             if (rows > 0) {
                 String sql3 = "select numofborrow from users where uno =?;";
-                List<Users> students1 = executeQuery(Users.class, sql3, uno);
+                List<Users> students1 = executeQuery1(Users.class, sql3, uno);
 
                 Users s1 = students1.get(0);
                 long numofborrow = s1.getNumofborrow();
-                if (numofborrow < 5) {
-                    System.out.println(uno);
+                if (numofborrow > 0) {
+                    //System.out.println(uno);
                     String sql2 = "update users set numofborrow=? where uno=?;";
-                    executeUpdate(sql2, numofborrow - 1, uno);
+                    executeUpdate1(sql2, numofborrow - 1, uno);
 
                     String sql5 = "select amount from book where bno =?;";
-                    List<Book> books = executeQuery(Book.class, sql5, temp.getBno());
+                    List<Book> books = executeQuery1(Book.class, sql5, temp.getBno());
                     Book book = books.get(0);
                     long amount = book.getAmount();
 
                     String sql4 = "update book set amount =? where bno =?;";
-                    executeUpdate(sql4, amount + 1, temp.getBno());
+                    executeUpdate1(sql4, amount + 1, temp.getBno());
+                    connection.commit();
                     System.out.println("归还成功");
+                }else {
+                    System.out.println("归还失败");
                 }
             } else {
-                System.out.println("归还失败");
+                System.out.println("归还失败,无可归还的书籍！");
             }
+//        } catch (Exception e) {
+//            connection.rollback();
+//            System.out.println("归还失败");
+//            e.printStackTrace();
+//        }
 //        }else{
 //            System.out.println("这本书已归还");
 //        }
@@ -231,7 +250,7 @@ public class studentDao extends BaseDao {
         List<Users> students = executeQuery(Users.class,sql1,username,password);
         Users s = students.get(0);
         uno = s.getUno();
-        System.out.println(uno);
+       // System.out.println(uno);
         String sql = "select * from borrow where uno=?;";
         List<Borrow> Borrows = executeQuery(Borrow.class,sql,uno);
         System.out.println(Borrows);

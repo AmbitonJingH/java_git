@@ -7,13 +7,13 @@ public class Borrow {
     private int uno;
     private int bno;
   //  private Date borrowTime = new java.sql.Date(System.currentTimeMillis());
-    private Date returnTime;
-    private Date borrowTime = new Date(System.currentTimeMillis());
+    private Timestamp returnTime;
+    private Timestamp borrowTime = new Timestamp(System.currentTimeMillis());
 
     public Borrow() {
     }
 
-    public Borrow(int uno, int bno, Date borrowTime) {
+    public Borrow(int uno, int bno, Timestamp borrowTime) {
         this.uno = uno;
         this.bno = bno;
         this.borrowTime = borrowTime;
@@ -35,19 +35,19 @@ public class Borrow {
         this.bno = bno;
     }
 
-    public Date getBorrowTime() {
+    public Timestamp getBorrowTime() {
         return borrowTime;
     }
 
-    public void setBorrowTime(Date borrowTime) {
+    public void setBorrowTime(Timestamp borrowTime) {
         this.borrowTime = borrowTime;
     }
 
-    public Date getReturnTime() {
+    public Timestamp getReturnTime() {
         return returnTime;
     }
 
-    public void setReturnTime(Date returnTime) {
+    public void setReturnTime(Timestamp returnTime) {
         this.returnTime = returnTime;
     }
 

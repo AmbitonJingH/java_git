@@ -18,9 +18,10 @@ public class addtest {
         Scanner input = new Scanner(System.in);
         studentDao studentDaod = new studentDao();
         boolean isloginandregistrationOpen = true;
-        boolean isusewelcome = true;
-        boolean isuseselect = true;
+
         while (isloginandregistrationOpen){
+            boolean isusewelcome = true;
+            boolean isuseselect = true;
         login.loginandregistration();
         int a = input.nextInt();
         switch (a){
@@ -58,6 +59,9 @@ public class addtest {
                                                 case 2:
                                                     service.allBook();
                                                     break;
+                                                default:
+                                                    System.out.println("输入错误，请重新输入：");
+                                                    break;
                                             }
                                         }
                                         break;
@@ -69,6 +73,9 @@ public class addtest {
                                         break;
                                     case 4:
                                         service.personBorrowRecode();
+                                        break;
+                                    default:
+                                        System.out.println("输入错误，请重新输入：");
                                         break;
                                 }
                                // break;
@@ -90,6 +97,9 @@ public class addtest {
                                         break;
                                     case 3:
                                         service.adminBorrowRecode();
+                                        break;
+                                    default:
+                                        System.out.println("输入错误，请重新输入：");
                                         break;
                                 }
                             }
@@ -114,6 +124,9 @@ public class addtest {
                        // System.out.println("注册成功！");
                         break;
                 }
+                break;
+            default:
+                System.out.println("输入错误，请重新输入：");
                 break;
         }
     }
