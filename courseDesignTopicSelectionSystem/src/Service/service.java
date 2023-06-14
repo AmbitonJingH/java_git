@@ -4,13 +4,14 @@ import Dao.SystemDao;
 import Model.Course;
 import Model.User;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.Scanner;
 
 public class service {
     Scanner input = new Scanner(System.in);
-
+    SystemDao systemDao = new SystemDao();
     public boolean login() throws SQLException, NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
         User user = new User();
@@ -37,14 +38,18 @@ public class service {
         String checkPassword = input.next();
         if(checkPassword.equals(user.getUpassword())){
 
+            System.out.println("请输入学号：");
+            user.setUno(input.next());
             System.out.println("请输入姓名：");
             user.setUname(input.next());
+            System.out.println("请输入性别：");
+            user.setUsex(input.next());
             System.out.println("请输入院系：");
             user.setUdept(input.next());
             System.out.println("请输入班级：");
             user.setUclass(input.next());
             user.setId("学生");
-            System.out.println(user);
+            //System.out.println(user);
             systemDao.registration(user);
 
         }else{
@@ -66,8 +71,12 @@ public class service {
         String checkPassword = input.next();
         if(checkPassword.equals(user.getUpassword())){
 
+            System.out.println("请输入教师号：");
+            user.setUno(input.next());
             System.out.println("请输入姓名：");
             user.setUname(input.next());
+            System.out.println("请输入性别：");
+            user.setUsex(input.next());
             System.out.println("请输入院系：");
             user.setUdept(input.next());
             user.setUclass("null");
@@ -85,7 +94,7 @@ public class service {
 
         }else{
             System.out.println("两次密码输入不一致！");
-            registrationForStudent();
+            registrationForTeacher();
         }
 
     }
@@ -94,11 +103,11 @@ public class service {
 
         boolean add = true;
         SystemDao systemDao = new SystemDao();
-        int num = systemDao.checkQnum();
+        int num = systemDao.checkOffnum();
 
             while (add) {
 
-                if(num==0) {
+                if(systemDao.checkOffnum()==0) {
                     System.out.println("第一次添加题目最少添加3个，最多添加6个");
                     for (int i = 0; i < 3; i++) {
 
@@ -129,12 +138,66 @@ public class service {
 
     }
 
+//    public void searchSelection() throws SQLException, NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+//        SystemDao systemDao = new SystemDao();
+//        systemDao.searchSelection();
+//    }
 
+    public void searchCourse() throws SQLException, NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
+        SystemDao systemDao = new SystemDao();
+        systemDao.searchCourse();
 
+    }
 
+    public void selectCourse() throws SQLException, NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
+        SystemDao systemDao = new SystemDao();
+        Course course = new Course();
+        System.out.println("请输入你要选择的题目的序号：");
+        course.setCno(input.nextInt());
+        systemDao.selectCourse(course);
+    }
 
+    public void Submit() throws SQLException, IOException {
 
+        SystemDao systemDao = new SystemDao();
+        System.out.println("请输入您的实验报告所在路径：");
+        System.out.println("例如：C:\\Users\\Lenovo\\Desktop\\ALL\\zuoye.doc");
+        String file  = input.next();
+        systemDao.Submit(file);
 
+    }
+
+    public void getGrade() throws SQLException {
+
+        systemDao.searchGrade();
+
+    }
+
+    public void viewRecords() throws SQLException {
+
+        systemDao.viewRecords();
+    }
+
+    public void viewReport() throws SQLException, IOException {
+
+        viewRecords();
+        System.out.println("请输入要查看课程设计报告的学生学号：");
+        String sno = input.next();
+        systemDao.viewReport(sno);
+
+    }
+
+    public void guidance() throws SQLException, IOException {
+
+        System.out.println("请输入要指导的学生学号：");
+        String sno = input.next();
+        systemDao.guidance(sno);
+
+    }
+
+    public void getComment() throws SQLException, NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        systemDao.getComment();
+    }
 }

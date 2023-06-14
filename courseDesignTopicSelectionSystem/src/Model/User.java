@@ -10,24 +10,33 @@ UPASSWORD
 ID*/
 //alter table table_name auto_increment=1;更改自增序列号从1开始
 public class User {
-    private int uno;
-    private String uname;
-    private String udept;
-    private String uclass;
-    private String username;
-    private String upassword;
-    private String id;
-    private int qnum = 0;
+    private String uno;
+    private String uname = "";
+    private String udept = "";
+    private String uclass = "";
+    private String username = "";
+    private String upassword = "";
+    private String id = "";
+    private int offnum = 0;
+    private String usex;
 
     public User() {
 
     }
 
-    public int getUno() {
+    public String getUsex() {
+        return usex;
+    }
+
+    public void setUsex(String usex) {
+        this.usex = usex;
+    }
+
+    public String getUno() {
         return uno;
     }
 
-    public void setUno(int uno) {
+    public void setUno(String uno) {
         this.uno = uno;
     }
 
@@ -38,6 +47,7 @@ public class User {
     public void setUname(String uname) {
         this.uname = uname;
     }
+
 
     public String getUdept() {
         return udept;
@@ -79,15 +89,15 @@ public class User {
         this.id = id;
     }
 
-    public int getQnum() {
-        return qnum;
+    public int getOffnum() {
+        return offnum;
     }
 
-    public void setQnum(int qnum) {
-        this.qnum = qnum;
+    public void setOffnum(int offnum) {
+        this.offnum = offnum;
     }
 
     public String toString(){
-        return "name:"+uname+"udept:"+udept+"uclass:"+uclass+"username:"+username+"password:"+upassword+"id:"+id+"qnum:"+qnum;
+        return "name:"+uname+"udept:"+udept+"uclass:"+uclass+"username:"+username+"password:"+upassword+"id:"+id+"offnum:"+offnum;
     }
 }

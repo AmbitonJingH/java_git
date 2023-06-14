@@ -2,7 +2,7 @@ package Model;
 
 public class Course {
     private int cno;
-    private int uno;
+    private int tno;
     private String cname;
     private int memberNum = 0;
 
@@ -18,12 +18,12 @@ public class Course {
         this.cno = cno;
     }
 
-    public int getUno() {
-        return uno;
+    public int getTno() {
+        return tno;
     }
 
-    public void setUno(int uno) {
-        this.uno = uno;
+    public void setTno(int uno) {
+        this.tno = tno;
     }
 
     public String getCname() {
@@ -40,5 +40,9 @@ public class Course {
 
     public void setMemberNum(int memberNum) {
         this.memberNum = memberNum;
+    }
+
+    public String toString(){
+        return "课程号："+cno+" ";
     }
 }

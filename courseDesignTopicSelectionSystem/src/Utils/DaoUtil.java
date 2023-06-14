@@ -31,6 +31,7 @@ public class DaoUtil {
 
     public <T> List<T> executeQuery(Class<T> tclass,String sql,Object...params) throws SQLException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchFieldException {
 
+
         Connection connection = JDBCUtil.getConnection();
         PreparedStatement statement = connection.prepareStatement(sql);
 
