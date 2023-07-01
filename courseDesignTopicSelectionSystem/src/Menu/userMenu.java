@@ -18,10 +18,19 @@ public class userMenu {
     public void forTeacher(){
         System.out.println("=============================================");
         System.out.println("=                  1.添加题目              \t=");
-        System.out.println("=                  2.查看学生选题信息        \t=");
-        System.out.println("=                  3.指导课程设计           \t=");
-        System.out.println("=                  4.查看课程设计报告        \t=");
-        System.out.println("=                  5.评分                 \t=");
+        System.out.println("=                  2.删除题目              \t=");
+        System.out.println("=                  3.查看已发布的题目        \t=");
+        System.out.println("=                  4.查看学生选题信息        \t=");
+        System.out.println("=                  5.查看课设报告、指导及评分  \t=");
+        System.out.println("=                  0.返回上一级             \t=");
+        System.out.println("=============================================");
+        System.out.println("请输入要进行的操作：");
+    }
+
+    public void ReportOperation(){
+        System.out.println("=============================================");
+        System.out.println("=                  1.指导课程设计           \t=");
+        System.out.println("=                  2.评分                  \t=");
         System.out.println("=                  0.返回上一级             \t=");
         System.out.println("=============================================");
         System.out.println("请输入要进行的操作：");
@@ -36,4 +45,5 @@ public class userMenu {
         System.out.println("=============================================");
         System.out.println("请输入要进行的操作：");
     }
+
 }

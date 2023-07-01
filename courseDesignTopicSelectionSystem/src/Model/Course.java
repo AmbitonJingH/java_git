@@ -2,9 +2,9 @@ package Model;
 
 public class Course {
     private int cno;
-    private int tno;
+    private String tno;
     private String cname;
-    private int memberNum = 0;
+    private int member = 0;
 
     public Course() {
 
@@ -18,11 +18,11 @@ public class Course {
         this.cno = cno;
     }
 
-    public int getTno() {
+    public String getTno() {
         return tno;
     }
 
-    public void setTno(int uno) {
+    public void setTno(String uno) {
         this.tno = tno;
     }
 
@@ -35,11 +35,11 @@ public class Course {
     }
 
     public int getMemberNum() {
-        return memberNum;
+        return member;
     }
 
     public void setMemberNum(int memberNum) {
-        this.memberNum = memberNum;
+        this.member = memberNum;
     }
 
     public String toString(){

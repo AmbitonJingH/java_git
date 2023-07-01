@@ -1,0 +1,36 @@
+CREATE TABLE user1
+( uno CHAR(20) NOT NULL PRIMARY KEY,
+  uname CHAR(10) NOT NULL,
+  usex CHAR(2),
+  udept CHAR(10),
+  uclass CHAR(10),
+  username CHAR(20) UNIQUE,
+  upassword CHAR(20),
+  id CHAR(10),
+  offnum INT
+);
+
+CREATE TABLE guide(
+                      sno CHAR(20),
+                      tno CHAR(20),
+                      comments VARCHAR(20),
+                      starttime timestamp ,
+                      endtime timestamp ,
+                      FOREIGN KEY (sno)REFERENCES user1(uno),
+                      FOREIGN KEY (tno)REFERENCES user1(uno)
+);
+CREATE TABLE course(
+                       cno INT AUTO_INCREMENT PRIMARY KEY,
+                       tno CHAR(20),
+                       cname CHAR(20)UNIQUE,
+                       member INT(10),
+                       FOREIGN KEY (tno)REFERENCES user1(uno),
+                       CHECK(member BETWEEN 0 AND 4) );
+CREATE TABLE sselect(
+                        cno INT,
+                        sno CHAR(20),
+                        grade float ,
+                        report blob,
+                        FOREIGN KEY (cno)REFERENCES user1(uno),
+                        FOREIGN KEY (sno)REFERENCES user1(uno)
+);

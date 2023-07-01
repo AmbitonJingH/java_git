@@ -98,6 +98,6 @@ public class User {
     }
 
     public String toString(){
-        return "name:"+uname+"udept:"+udept+"uclass:"+uclass+"username:"+username+"password:"+upassword+"id:"+id+"offnum:"+offnum;
+        return String.format("姓名：%s\t系别：%s\t班级：%s\t用户名：%s\t密码：%s\t身份:%s\t发布题目数量:%d\n",uname,udept,uclass,username,upassword,id,offnum);
     }
 }
