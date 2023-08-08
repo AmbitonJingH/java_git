@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script language="JavaScript" src="script/vue.js"></script>
+    <script language="JavaScript">
+        window.onload = function (){
+            var vue = new Vue({
+                "el":"#div0",
+                data:{
+                    msg:"hello"
+                },
+                methods:{
+                    changeMsg:function (){
+                        this.msg = "已改变 你好 世界！";
+                    }
+                },
+                beforeCreat:function (){
+                    console.log("beforeCreat......");
+                    console.log("msg:"+this.msg);
+                },
+                created:function (){
+                    console.log("created......");
+                    console.log("msg:"+this.msg);
+                    },
+                beforeMount:function (){
+                    console.log("beforeMount......");
+                    console.log("msg:"+document.getElementById("span").innerText);
+                    },
+                mounted:function (){
+                    console.log("mounted......");
+                    console.log("msg:"+document.getElementById("span").innerText);
+                    },
+                beforeUpdate:function (){
+                    console.log("beforeUpdate......");
+                    console.log("msg:"+document.getElementById("span").innerText);
+                },
+                updated:function (){
+                    console.log("updated......");
+                    console.log("msg:"+document.getElementById("span").innerText);
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div id="div0">
+        <span id="span">{{msg}}</span>
+        <input type="button" value="改变msg的值" v-on:click="changeMsg">
+
+    </div>
+</body>
+</html>
