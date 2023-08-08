@@ -40,7 +40,7 @@ public class userMenu {
         System.out.println("=============================================");
         System.out.println("=                  1.查看所有选题信息        \t=");
         System.out.println("=                  2.删除选题记录           \t=");
-        System.out.println("=                  3.所有用户              \t=");
+        System.out.println("=                  3.查看所有用户信息        \t=");
         System.out.println("=                  0.返回上一级             \t=");
         System.out.println("=============================================");
         System.out.println("请输入要进行的操作：");

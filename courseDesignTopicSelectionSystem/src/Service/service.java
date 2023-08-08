@@ -132,15 +132,6 @@ public class service {
             user.setId("教师");
         //    user.setQnum(3);
             systemDao.registration(user);
-//            System.out.println("请添加3个课程设计题目：");
-//            for(int i=0;i<3;i++){
-//                Course course = new Course();
-//                System.out.println("请输入课程设计题目：");
-//                course.setCname(input.next());
-//                course.setUno(user.getUno());
-//                systemDao.addCourse(course);
-//            }
-
         }else{
             System.out.println("两次密码输入不一致！");
             registrationForTeacher();
@@ -249,17 +240,12 @@ public class service {
         String sno = input.next();
         System.out.println("请输入课程设计报告文件的下载路径：(例如：C:\\Users\\Lenovo\\Desktop\\ALL\\zuoye.doc)");
         String address = input.next();
-//        System.out.println("查看完报告后可进行评分（若不评分请输入退出）:");
-//        String grade;
-//        grade = input.next();
         return systemDao.viewReport(sno,address);
 
     }
 
     public void guidance(String sno) throws SQLException, IOException {
 
-//        System.out.println("请输入要指导的学生学号：");
-//        String sno = input.next();
         systemDao.guidance(sno);
 
     }

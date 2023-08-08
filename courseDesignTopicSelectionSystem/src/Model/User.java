@@ -10,7 +10,7 @@ UPASSWORD
 ID*/
 //alter table table_name auto_increment=1;更改自增序列号从1开始
 public class User {
-    private String uno;
+    private String uno ="";
     private String uname = "";
     private String udept = "";
     private String uclass = "";

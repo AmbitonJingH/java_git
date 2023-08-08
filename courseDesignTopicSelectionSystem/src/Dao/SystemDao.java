@@ -61,6 +61,7 @@ public class SystemDao extends DaoUtil {
             }
         } catch (SQLException throwables) {
             System.out.println("注册失败！用户名已存在");
+            throwables.printStackTrace();
         }
 
         if(rows>0){
@@ -68,28 +69,6 @@ public class SystemDao extends DaoUtil {
         }
 
     }
-//    public void registrationForTeacher(User user) throws SQLException {
-//
-//
-//        int rows = 0;
-//        String sql = "insert into users(uname,udept,uclass,username,upassword,id,qnum) values(?,?,?,?,?,?,?)";
-//        if(user.getQnum()==0){
-//            String qnum = null;
-//            rows = executeUpdate(sql,user.getUname(),user.getUdept(),user.getUclass(),user.getUsername(),user.getUpassword(),user.getId(),qnum);
-//        }else{
-//            System.out.println(user.getUname());
-//            System.out.println(user.getUdept());
-//            rows = executeUpdate(sql,user.getUname(),user.getUdept(),user.getUclass(),user.getUsername(),user.getUpassword(),user.getId(),user.getQnum());
-//        }
-//        if(rows>0){
-//            System.out.println("注册成功！");
-//            username = user.getUsername();
-//            upassword = user.getUpassword();
-//        }else{
-//            System.out.println("注册失败！");
-//        }
-//
-//    }
 
     public void addCourse(Course course) throws SQLException, NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
@@ -280,8 +259,9 @@ public class SystemDao extends DaoUtil {
     public void searchGrade() throws SQLException {
 
         Connection connection = JDBCUtil.getConnection();
-        String sql = "select uname as 姓名,cname as 题目,grade as 成绩 from user1,course,sselect where sno=uno and sselect.cno=course.cno";
+        String sql = "select uname as 姓名,cname as 题目,grade as 成绩 from user1,course,sselect where sno=? and sselect.cno=course.cno and sselect.sno=user1.uno";
         PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setObject(1,uno);
         ResultSet set = statement.executeQuery();
         while(set.next()){
             String name = set.getString("姓名");
@@ -366,33 +346,6 @@ public class SystemDao extends DaoUtil {
             }
         }while (set.next());
 
-//        while (set.next()){
-//            String temp = set.getString("sno");
-//            System.out.println("tyuj7");
-//            if(temp.equals(false)) {
-//                System.out.println("该学生不存在！");
-//                break;
-//            }
-//            Blob blob = set.getBlob("report");
-//            InputStream ips = blob.getBinaryStream();
-//            int len =-1;
-//            byte[] buf = new byte[1024];
-//            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//            while ((len = ips.read(buf))!=-1){
-//                baos.write(buf,0,len);
-//            }
-//            ips.close();
-//            baos.close();
-//            byte[] bytes = baos.toByteArray();
-//
-//            File file = new File(address);
-//            FileOutputStream fom = new FileOutputStream(file);
-//            fom.write(bytes);
-//            fom.close();
-//
-//        }
-        //System.out.println("下载成功，请前往"+address+" 查看实验报告");
-//        System.out.println(sno);
         return sno;
     }
 
@@ -410,7 +363,6 @@ public class SystemDao extends DaoUtil {
             if(grade>=60.0)
                 System.out.println("该学生课程设计已通过");
             else {
-               // viewReport(sno);
                 Scanner sc = new Scanner(System.in);
                 System.out.println("请输入您的评语（不超过200字）：");
                 String comment = sc.next();
@@ -526,8 +478,6 @@ public class SystemDao extends DaoUtil {
             User u1 = users.get(0);
             int offnum = u1.getOffnum();
             String sql = "select member from course where cno=?";
-//            PreparedStatement statement = connection.prepareStatement(sql);
-//            ResultSet set = statement.executeQuery();
             List<Course> courses = executeQuery(Course.class, sql, cno);
             Course c1 = courses.get(0);
             if(c1.getMemberNum()!=0){
@@ -556,45 +506,6 @@ public class SystemDao extends DaoUtil {
             System.out.println("该题目不存在！");
             connection.rollback();
         }
-//        try {
-//            String sql = "select member from course where cno=?";
-//            List<Course> courses = executeQuery(Course.class, sql, cno);
-//            Course c1 = courses.get(0);
-//            if(c1.getMemberNum()!=0){
-//                System.out.println("该题目已有学生选择，无法删除！");
-//            }else {
-//
-//                String sql1 = "delete from course where cno=?";
-//                int rows = executeUpdate(sql1, cno);
-//                if(rows>0) {
-//                    String sql2 = "update user1 set offnum = ? where uno=?";
-//
-//                    connection.commit();
-//                    System.out.println("删除成功");
-//                }
-//                else
-//                    System.out.println("删除失败");
-//            }
-//        } catch (IndexOutOfBoundsException throwables) {
-//            System.out.println("该题目不存在！");
-//            connection.rollback();
-//        } catch (NoSuchMethodException e) {
-//            e.printStackTrace();
-//            connection.rollback();
-//        } catch (InvocationTargetException e) {
-//            e.printStackTrace();
-//            connection.rollback();
-//        } catch (InstantiationException e) {
-//            e.printStackTrace();
-//            connection.rollback();
-//        } catch (IllegalAccessException e) {
-//            e.printStackTrace();
-//            connection.rollback();
-//        } catch (NoSuchFieldException e) {
-//            e.printStackTrace();
-//            connection.rollback();
-//        }
-
 
     }
 }

@@ -27,17 +27,6 @@ public class controllerService {
             boolean ReportOperationIsOpen = true;
 
             loginAndRegistration.loginAndRegistration();
-//            int a1 = 0;
-//            while (true) {
-//                String str = input.next();
-//                try {
-//                    a1 = f.woChaoFan();
-//                    //a1 = Integer.parseInt(str);
-//                    break;
-//                } catch (Exception e) {
-//                    System.out.println("输入错误,请重新输入：");
-//                }
-//            }
             int a1 = f.woChaoFan();
             switch (a1) {
                 case 0:
